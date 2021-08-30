@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2021-08-30 Mon 17:58 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notes on Software Development Waste</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Henrique Carvalho Alves &lt;hcarvalhoalves@gmail.com&gt;" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<style type="text/css"> @media screen { #content { margin: 0 auto; } } @media print { #content { max-width: 100%;} } .figure { max-width: 70%; margin: 0 auto; } </style>
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.add("code-highlighted");
+         target.classList.add("code-highlighted");
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.classList.remove("code-highlighted");
+         target.classList.remove("code-highlighted");
+       }
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Notes on Software Development Waste
+<br />
+<span class="subtitle">Henrique Carvalho Alves &lt;hcarvalhoalves@gmail.com&gt;</span>
+</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org25fb77a">1. Summary</a></li>
+<li><a href="#orgda70bf3">2. Types and causes of waste [2]</a></li>
+<li><a href="#orgf76f92e">3. Causal relationships</a></li>
+<li><a href="#orge57ef5b">4. Sources</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org25fb77a" class="outline-2">
+<h2 id="org25fb77a"><span class="section-number-2">1.</span> Summary</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<span class="underline">Sedano et al (2017)[1]</span> on "Software Development Waste" identified and describe that software projects manifest nine possible types of waste, in terms of loss of productivity and unnecessary friction.
+</p>
+
+<p>
+These are my notes on the paper, where I summarize the waste taxonomy according to the paper and explore possible causal relationships.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgda70bf3" class="outline-2">
+<h2 id="orgda70bf3"><span class="section-number-2">2.</span> Types and causes of waste [2]</h2>
+<div class="outline-text-2" id="text-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Waste</td>
+<td class="org-left"><b>Building the wrong feature or product</b></td>
+<td class="org-left"><b>Mismanaging the backlog</b></td>
+<td class="org-left"><b>Rework</b></td>
+<td class="org-left"><b>Unnecessarily complex solutions</b></td>
+<td class="org-left"><b>Extraneous cognitive load</b></td>
+<td class="org-left"><b>Psychological distress</b></td>
+<td class="org-left"><b>Waiting/Multitasking</b></td>
+<td class="org-left"><b>Knowledge loss</b></td>
+<td class="org-left"><b>Ineffective communication</b></td>
+</tr>
+
+<tr>
+<td class="org-left">Definition</td>
+<td class="org-left">The cost of building a feature or product that does not address user or business needs.</td>
+<td class="org-left">The cost of duplicating work, expediting lower value user features, or delaying necessary bug fixes.</td>
+<td class="org-left">The cost of altering delivered work that should have been done correctly but was not.</td>
+<td class="org-left">The cost of creating a more complicated solution than necessary, a missed opportunity to simplify features, user interface, or code.</td>
+<td class="org-left">The costs of unneeded expenditure of mental energy.</td>
+<td class="org-left">The costs of burdening the team with unhelpful stress.</td>
+<td class="org-left">The cost of idle time, often hidden by multi-tasking.</td>
+<td class="org-left">The cost of re-acquiring information that the team once knew.</td>
+<td class="org-left">The cost of incomplete, incorrect, misleading, inefficient, or absent communication.</td>
+</tr>
+
+<tr>
+<td class="org-left">Causes</td>
+<td class="org-left">1. User desiderata (not doing user research, validation, or testing; ignoring user feedback; working on low user value)</td>
+<td class="org-left">1. Backlog inversion</td>
+<td class="org-left">1. Technical debt</td>
+<td class="org-left">1. Unnecessary feature complexity from the user’s perspective</td>
+<td class="org-left">1. Suffering from technical debt</td>
+<td class="org-left">1. Low team morale</td>
+<td class="org-left">1. Slow tests or unreliable tests</td>
+<td class="org-left">1. Team churn</td>
+<td class="org-left">1. Team size is too large</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">2. Business desiderata (not involving a business stakeholder; slow stakeholder feedback; unclear product priorities)</td>
+<td class="org-left">2. Working on too many features simultaneously</td>
+<td class="org-left">2. Rejected stories (e.g. product manager rejects story implementation)</td>
+<td class="org-left">2. Unnecessary technical complexity (duplicating code, lack of interaction design reuse, overly complex technical design created up-front)</td>
+<td class="org-left">2. Complex or large stories</td>
+<td class="org-left">2. Rush mode</td>
+<td class="org-left">2. Unreliable acceptance environment</td>
+<td class="org-left">2. Knowledge silos</td>
+<td class="org-left">2. Asynchronous communication (distributed teams; distributed stakeholders; dependency on another team; opaque processes outside team)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">3. Duplicated work</td>
+<td class="org-left">3. No clear definition of done (ambiguous stories; second guessing design mocks)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">3. Inefficient tools and problematic APIs, libraries, and frameworks</td>
+<td class="org-left">3. Interpersonal or team conflict</td>
+<td class="org-left">3. Missing information, people, or equipment</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">3. Imbalance (dominating the conversation; not listening)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">4. Not enough ready stories</td>
+<td class="org-left">4. Defects (poor testing strategy; no root-cause analysis on bugs)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">4. Unnecessary context switching</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">4. Context switching from delayed feedback</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">4. Inefficient meetings (lack of focus; skipping retros; not discussing blockers each day; meetings running over (e.g. long stand-ups)</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">5. Imbalance of feature work and bug fixing</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">5. Inefficient development flow</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">6. Delaying testing or critical bug fixing</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">6. Poorly organized code</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">7. Capricious thrashing</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgf76f92e" class="outline-2">
+<h2 id="orgf76f92e"><span class="section-number-2">3.</span> Causal relationships</h2>
+<div class="outline-text-2" id="text-3">
+
+<div id="orgfc22cab" class="figure">
+<p><object type="image/svg+xml" data="relationships.svg" class="org-svg">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge57ef5b" class="outline-2">
+<h2 id="orge57ef5b"><span class="section-number-2">4.</span> Sources</h2>
+<div class="outline-text-2" id="text-4">
+<ol class="org-ol">
+<li>Todd Sedano, Paul Ralph, and Cecile Peraire: "Software Development Waste". 2017 IEEE/ACM 39th International Conference on Software Engineering (ICSE), 10.1109/icse.2017.20.
+<a href="https://ieeexplore.ieee.org/document/7985656">https://ieeexplore.ieee.org/document/7985656</a></li>
+
+<li>Greg Wilson: "Software Development Waste". 2021-08-29
+<a href="https://neverworkintheory.org/2021/08/29/software-development-waste.html">https://neverworkintheory.org/2021/08/29/software-development-waste.html</a></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Henrique Carvalho Alves &lt;hcarvalhoalves@gmail.com&gt;</p>
+<p class="date">Created: 2021-08-30 Mon 17:58</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
