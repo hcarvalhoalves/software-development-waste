@@ -1,10 +1,16 @@
-#+TITLE: Map of Software Developement Waste
+#+TITLE: Notes on Software Development Waste
+#+SUBTITLE: Henrique Carvalho Alves <hcarvalhoalves@gmail.com>
 #+AUTHOR: Henrique Carvalho Alves <hcarvalhoalves@gmail.com>
 #+HTML_HEAD_EXTRA: <style type="text/css"> @media screen { #content { margin: 0 auto; } } @media print { #content { max-width: 100%;} } .figure { max-width: 70%; margin: 0 auto; } </style>
 #+STARTUP: inlineimages
-#+OPTIONS: toc:nil
 
-* Types and causes of waste
+* Summary
+
+  _Sedano et al (2017)[1]_ on "Software Development Waste" identified and describe that software projects manifest nine possible types of waste, in terms of loss of productivity and unnecessary friction.
+
+  These are my notes on the paper, where I summarize the waste taxonomy according to the paper and explore possible causal relationships.
+  
+* Types and causes of waste [2]
 
 | Waste      | *Building the wrong feature or product*                                                                                 | *Mismanaging the backlog*                                                                            | *Rework*                                                                              | *Unnecessarily complex solutions*                                                                                                          | *Extraneous cognitive load*                                          | *Psychological distress*                               | *Waiting/Multitasking*                                | *Knowledge loss*                                              | *Ineffective communication*                                                                                                            |
 | Definition | The cost of building a feature or product that does not address user or business needs.                                 | The cost of duplicating work, expediting lower value user features, or delaying necessary bug fixes. | The cost of altering delivered work that should have been done correctly but was not. | The cost of creating a more complicated solution than necessary, a missed opportunity to simplify features, user interface, or code.       | The costs of unneeded expenditure of mental energy.                  | The costs of burdening the team with unhelpful stress. | The cost of idle time, often hidden by multi-tasking. | The cost of re-acquiring information that the team once knew. | The cost of incomplete, incorrect, misleading, inefficient, or absent communication.                                                   |
@@ -16,7 +22,7 @@
 |            |                                                                                                                         | 6. Delaying testing or critical bug fixing                                                           |                                                                                       |                                                                                                                                            | 6. Poorly organized code                                             |                                                        |                                                       |                                                               |                                                                                                                                        |
 |            |                                                                                                                         | 7. Capricious thrashing                                                                              |                                                                                       |                                                                                                                                            |                                                                      |                                                        |                                                       |                                                               |                                                                                                                                        |
 
-* Causal and reinforcing relationships
+* Causal relationships
 
 #+BEGIN_SRC dot :file relationships.svg :exports results
 digraph {
@@ -38,14 +44,15 @@ digraph {
   9 -> 8 [label="knowledge silos"]
   8 -> 9 [label="inexperience"]
   4 -> 7 [label="long iteration time"]
-  7 -> 2 [label="excessive\nwork-in-progress"]
+  7 -> 2 [label="excessive work-in-progress\nbacklog inversion\nlack of stories"]
   3 -> 4 [label="accidental complexity"]
   4 -> 3 [label="technical debt\ndefects"]
+  5 -> 3 [label="defects"]
   7 -> 5 [label="context switching"]
   5 -> 9 [label="team size\nasync communication"]
-  2 -> 3 [label="rejected/badly defined stories"]
-  3 -> 2 [label="duplicated work"]
-  9 -> 1 [label="poor research"]
+  2 -> 3 [label="rejected stories\nbadly defined stories"]
+  3 -> 2 [label="duplicated work\nbugfix-to-feature ratio"]
+  9 -> 1 [label="missing user needs\nmissing business needs\nlack of involvement"]
   9 -> 6 [label="interpersonal/team conflict"]
   1 -> 4 [label="feature complexity"]
   9 -> 7 [label="missing support"]
@@ -57,5 +64,8 @@ digraph {
 
 *  Sources
    
-  1. Todd Sedano, Paul Ralph, and Cecile Peraire: "Software Development Waste". 2017 IEEE/ACM 39th International Conference on Software Engineering (ICSE), 10.1109/icse.2017.20. https://ieeexplore.ieee.org/document/7985656
-  2. Greg Wilson: "Software Development Waste". 2021-08-29  https://neverworkintheory.org/2021/08/29/software-development-waste.html
+  1. Todd Sedano, Paul Ralph, and Cecile Peraire: "Software Development Waste". 2017 IEEE/ACM 39th International Conference on Software Engineering (ICSE), 10.1109/icse.2017.20.
+     https://ieeexplore.ieee.org/document/7985656
+     
+  2. Greg Wilson: "Software Development Waste". 2021-08-29
+     https://neverworkintheory.org/2021/08/29/software-development-waste.html
