@@ -1,6 +1,7 @@
 #+TITLE: Notes on Software Development Waste
 #+SUBTITLE: Henrique Carvalho Alves <hcarvalhoalves@gmail.com>
 #+AUTHOR: Henrique Carvalho Alves <hcarvalhoalves@gmail.com>
+#+HTML_HEAD_EXTRA: <style type="text/css"> @media screen { #content { margin: 0 auto; } } @media print { #content { max-width: 100%;} } .figure { max-width: 70%; margin: 0 auto; } </style>
 #+STARTUP: inlineimages
 
 * Summary
