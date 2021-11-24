@@ -1,14 +1,13 @@
 #+TITLE: Notes on Software Development Waste
 #+SUBTITLE: Henrique Carvalho Alves <hcarvalhoalves@gmail.com>
 #+AUTHOR: Henrique Carvalho Alves <hcarvalhoalves@gmail.com>
-#+HTML_HEAD_EXTRA: <style type="text/css"> @media screen { #content { margin: 0 auto; } } @media print { #content { max-width: 100%;} } .figure { max-width: 70%; margin: 0 auto; } </style>
 #+STARTUP: inlineimages
 
 * Summary
 
   _Sedano et al (2017)[1]_ on "Software Development Waste" identified and describe that software projects manifest nine possible types of waste, in terms of loss of productivity and unnecessary friction.
 
-  These are my notes on the paper, where I summarize the waste taxonomy according to the paper and explore possible causal relationships.
+  These are my notes on the paper, where I summarize the waste taxonomy according to the paper, and speculate about possible relationships between the wastes and their causes.
   
 * Types and causes of waste [2]
 
@@ -22,7 +21,7 @@
 |            |                                                                                                                         | 6. Delaying testing or critical bug fixing                                                           |                                                                                       |                                                                                                                                            | 6. Poorly organized code                                             |                                                        |                                                       |                                                               |                                                                                                                                        |
 |            |                                                                                                                         | 7. Capricious thrashing                                                                              |                                                                                       |                                                                                                                                            |                                                                      |                                                        |                                                       |                                                               |                                                                                                                                        |
 
-* Causal relationships
+* Possible Relationships
 
 #+BEGIN_SRC dot :file relationships.svg :exports results
 digraph {
@@ -65,7 +64,7 @@ digraph {
 *  Sources
    
   1. Todd Sedano, Paul Ralph, and Cecile Peraire: "Software Development Waste". 2017 IEEE/ACM 39th International Conference on Software Engineering (ICSE), 10.1109/icse.2017.20.
-     https://ieeexplore.ieee.org/document/7985656
+     https://www.researchgate.net/publication/313360479_Software_Development_Waste
      
   2. Greg Wilson: "Software Development Waste". 2021-08-29
      https://neverworkintheory.org/2021/08/29/software-development-waste.html
